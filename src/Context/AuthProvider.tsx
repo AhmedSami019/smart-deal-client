@@ -1,15 +1,16 @@
+import type { ReactNode } from "react";
 import { AuthContext } from "./AuthContext";
 
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }: { children: ReactNode }) => {
 
-    const authInfo = {
+    const authInfo  = {
 
-    }
+    } 
 
     return (
         <AuthContext value={authInfo}>
-
+            {children}
         </AuthContext>
     );
 };
