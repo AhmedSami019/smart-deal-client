@@ -1,9 +1,18 @@
 @import "tailwindcss";
-@plugin "daisyui"
+@plugin "daisyui";
 
+/* 1. Define the colors in the Tailwind Theme block */
+@theme {
+  --color-primary: #632ee3;
+  --color-secondary: #9f62f2;
+}
+
+/* 2. Tell DaisyUI to use these colors for the light theme */
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
-  --color-primary: #632EE3;
-  --color-secondary: #9F62F2;
+  
+  /* In v5, you map the DaisyUI internal variable to the Tailwind variable */
+  --primary: var(--color-primary);
+  --secondary: var(--color-secondary);
 }
