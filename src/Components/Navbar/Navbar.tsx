@@ -15,11 +15,14 @@ const Navbar = () => {
       </li>
       {user && (
         <>
+        <li>
+          <NavLink to={"myProducts"}>My Products</NavLink>
+        </li>
           <li>
             <NavLink to={"/myBids"}>My Bids</NavLink>
           </li>
           <li>
-            <NavLink to={"/register"}>Register</NavLink>
+            <NavLink to={"/createProduct"}>Create Product</NavLink>
           </li>
         </>
       )}
