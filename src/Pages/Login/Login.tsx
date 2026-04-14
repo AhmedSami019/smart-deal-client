@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../Context/AuthContext';
+import { NavLink } from 'react-router';
 
 const Login = () => {
 
@@ -16,6 +18,8 @@ const Login = () => {
     return (
         <div className="card bg-base-100 w-full mx-auto max-w-sm shrink-0 shadow-2xl">
       <div className="card-body">
+        <h2 className='text-2xl text-center font-bold'>Login</h2>
+        <p className='text-center'>Don't have any account?<NavLink to={"/register"} className={"text-blue-600"}> Register</NavLink></p>
         <fieldset className="fieldset">
           <label className="label">Email</label>
           <input type="email" className="input" placeholder="Email" />
