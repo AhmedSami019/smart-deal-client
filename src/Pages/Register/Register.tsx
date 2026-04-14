@@ -1,25 +1,37 @@
 import { useContext } from "react";
 import { AuthContext } from "../../Context/AuthContext";
+import { NavLink } from "react-router";
 
 const Register = () => {
+  const { signInWithGoogle } = useContext(AuthContext);
 
-    const {signInWithGoogle} = useContext(AuthContext)
-
-    const handleSignInWithGoogle = ()=>{
-        signInWithGoogle()
-        .then((result)=>{
-          console.log(result.user);
-        }).catch((error) => {
-          console.log(error.message);
-        })
-    }
+  const handleSignInWithGoogle = () => {
+    signInWithGoogle()
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
 
   return (
     <div className="card bg-base-100 w-full mx-auto max-w-sm shrink-0 shadow-2xl">
       <div className="card-body">
+        <h2 className="text-2xl text-center font-bold">Register</h2>
+        <p className="text-center">
+          Already have an account?{" "}
+          <NavLink to={"/login"} className={"text-blue-600"}>
+            Login
+          </NavLink>
+        </p>
         <fieldset className="fieldset">
+          <label className="label">Name</label>
+          <input type="text" className="input" placeholder="Your name" />
           <label className="label">Email</label>
           <input type="email" className="input" placeholder="Email" />
+          <label className="label">Photo url</label>
+          <input type="url" className="input" placeholder="Photo url" />
           <label className="label">Password</label>
           <input type="password" className="input" placeholder="Password" />
           <div>
@@ -27,8 +39,14 @@ const Register = () => {
           </div>
           <button className="btn btn-neutral mt-4">Login</button>
         </fieldset>
+        {/* divider */}
+        <div className="divider">OR</div>
+
         {/* Google */}
-        <button onClick={handleSignInWithGoogle} className="btn bg-white text-black border-[#e5e5e5]">
+        <button
+          onClick={handleSignInWithGoogle}
+          className="btn bg-white text-black border-[#e5e5e5]"
+        >
           <svg
             aria-label="Google logo"
             width="16"
