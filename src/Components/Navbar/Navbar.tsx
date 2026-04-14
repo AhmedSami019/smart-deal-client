@@ -65,9 +65,9 @@ const Navbar = () => {
         {user ? (
           <a className="btn">sing out</a>
         ) : (
-          <a className="btn" href="">
+          <NavLink className="btn" to={"/login"}>
             sing in
-          </a>
+          </NavLink>
         )}
       </div>
     </div>
