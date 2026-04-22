@@ -3,7 +3,15 @@ import { AuthContext } from "../../Context/AuthContext";
 import { use } from "react";
 
 const Navbar = () => {
-  const { user } = use(AuthContext);
+  const { user, singOutUser } = use(AuthContext);
+
+
+// this function for signout user
+const handleSignOutUser = ()=>{
+  singOutUser().then(()=>{
+    console.log("sing out successfully");
+  }).catch((error: unknown) => console.log(error))
+}
 
   const links = (
     <>
@@ -66,7 +74,7 @@ const Navbar = () => {
       </div>
       <div className="navbar-end">
         {user ? (
-          <a className="btn">sing out</a>
+          <button onClick={handleSignOutUser} className="btn">sing out</button>
         ) : (
           <NavLink className="btn" to={"/login"}>
             sing in
