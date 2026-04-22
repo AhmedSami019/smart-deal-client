@@ -38,6 +38,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // sing out user
   const singOutUser = ()=>{
+    setLoading(true)
     return signOut(auth)
   }
 
