@@ -15,6 +15,14 @@ const Register = () => {
       });
   };
 
+  const handleRegister = (e)=>{
+    e.preventDefault()
+    const form = e.target;
+    const formData = new FormData(form)
+    const formValues = Object.fromEntries(formData.entries())
+    console.log(formValues);
+  }
+
   return (
     <div className="card bg-base-100 w-full mx-auto max-w-sm shrink-0 shadow-2xl">
       <div className="card-body">
@@ -25,20 +33,22 @@ const Register = () => {
             Login
           </NavLink>
         </p>
-        <fieldset className="fieldset">
+        <form onSubmit={handleRegister} className="fieldset">
           <label className="label">Name</label>
-          <input type="text" className="input" placeholder="Your name" />
+          <input type="text" className="input" name="userName" placeholder="Your name" />
           <label className="label">Email</label>
-          <input type="email" className="input" placeholder="Email" />
+          <input type="email" className="input" name="email" placeholder="Email" />
           <label className="label">Photo url</label>
-          <input type="url" className="input" placeholder="Photo url" />
+          <input type="url" className="input" name="photo" placeholder="Photo url" />
           <label className="label">Password</label>
-          <input type="password" className="input" placeholder="Password" />
+          <input type="password" className="input" name="password" placeholder="Password" />
+           <label className="label">Confirm Password</label>
+          <input type="password" className="input" name="newPassword" placeholder="Confirm Password" />
           <div>
             <a className="link link-hover">Forgot password?</a>
           </div>
           <button className="btn btn-neutral mt-4">Login</button>
-        </fieldset>
+        </form>
         {/* divider */}
         <div className="divider">OR</div>
 
