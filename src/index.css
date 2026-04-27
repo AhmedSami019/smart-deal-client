@@ -16,3 +16,19 @@
   --primary: var(--color-primary);
   --secondary: var(--color-secondary);
 }
+
+/* Override the DaisyUI button with a gradient */
+@layer components {
+  .btn-primary {
+    /* Uses !important to ensure the solid color variable is overridden */
+    background-image: linear-gradient(to right, #632EE3, #9F62F2) !important;
+    border: none !important;
+    color: white !important;
+  }
+
+  .btn-primary:hover {
+    /* Slightly brighten the gradient on hover */
+    filter: brightness(1.1);
+    background-image: linear-gradient(to right, #632EE3, #9F62F2) !important;
+  }
+}

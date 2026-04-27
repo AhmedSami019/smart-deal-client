@@ -74,9 +74,9 @@ const handleSignOutUser = ()=>{
       </div>
       <div className="navbar-end">
         {user ? (
-          <button onClick={handleSignOutUser} className="btn">sing out</button>
+          <button onClick={handleSignOutUser} className="btn btn-primary">sing out</button>
         ) : (
-          <NavLink className="btn" to={"/login"}>
+          <NavLink className="btn btn-primary" to={"/login"}>
             sing in
           </NavLink>
         )}
