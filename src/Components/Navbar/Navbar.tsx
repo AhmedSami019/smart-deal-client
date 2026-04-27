@@ -65,9 +65,9 @@ const handleSignOutUser = ()=>{
             {links}
           </ul>
         </div>
-        <a className="text-2xl font-bold">
+        <NavLink to={'/'} className="text-2xl font-bold">
           Smart<span className="text-primary">Deal</span>
-        </a>
+        </NavLink>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
