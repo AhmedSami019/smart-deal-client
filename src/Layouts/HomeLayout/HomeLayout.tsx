@@ -7,13 +7,13 @@ const HomeLayout = () => {
         <div>
             <header>
                 {/* this is navbar section */}
-                <nav>
+                <nav className="px-10">
                     <Navbar></Navbar>
                 </nav>
             </header>
 
             {/* this is main body section */}
-            <main>
+            <main className="">
                 <Outlet></Outlet>
             </main>
         </div>
