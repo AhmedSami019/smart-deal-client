@@ -22,13 +22,13 @@ const LatestProducts = () => {
 
   return (
     <div>
-      <h2 className="text-center text-5xl font-bold my-10">Latest <span className="text-primary">Products</span></h2>
+      <h2 className="text-center text-5xl font-bold my-10">Recent <span className="text-primary">Products</span></h2>
       {loading ? (
         <p>loading..</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mx-10">
           {latestProducts.map((product) => (
-            <Product key={product._id}></Product>
+            <Product product={product} key={product._id}></Product>
           ))}
         </div>
       )}
