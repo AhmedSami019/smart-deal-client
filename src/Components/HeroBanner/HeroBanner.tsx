@@ -8,7 +8,7 @@ const HeroBanner = () => {
       </p>
       <div className="w-3/12 border pl-3 rounded-3xl">
         <label className="flex justify-between items-center">
-          <input type="search" required placeholder="Search" />
+          <input className="outline-0" type="search" required placeholder="Search" />
           <div className="bg-primary px-4 py-3 rounded-r-3xl">
             <svg
             className="h-[1em] opacity-50"
