@@ -32,9 +32,9 @@ const HeroBanner = () => {
         </label>
       </div>
 
-       <div className="space-x-5">
-            <button className="btn btn-primary">watch all products</button>
-            <button className="btn border-2 border-primary">watch all products</button>
+       <div className="space-x-5 flex items-center">
+            <button className="btn btn-primary px-6 h-12">watch all products</button>
+            <button className="btn-secondary"><span className="btn-secondary-inner">watch all products</span></button>
           </div>
     </div>
   );

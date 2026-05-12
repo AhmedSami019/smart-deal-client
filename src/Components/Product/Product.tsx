@@ -2,7 +2,7 @@ import { Link } from "react-router";
 
 type ProductProps = {
   product: {
-    _id: string;
+    _id: any;
     title: string;
     image: string;
   };

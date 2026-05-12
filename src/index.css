@@ -21,20 +21,23 @@
   --secondary: var(--color-secondary);
 }
 
-/* Override the DaisyUI button with a gradient */
-@layer components {
-  .btn-primary {
-    /* Uses !important to ensure the solid color variable is overridden */
-    background-image: linear-gradient(to right, #632ee3, #9f62f2) !important;
-    border: none !important;
-    color: white !important;
-  }
 
-  .btn-primary:hover {
-    /* Slightly brighten the gradient on hover */
-    filter: brightness(1.1);
-    background-image: linear-gradient(to right, #632ee3, #9f62f2) !important;
-  }
+/* Custom button override */
+.btn-primary {
+  @apply rounded-xl  bg-gradient-to-r from-[#632EE3] to-[#9F62F2] border-none text-white;
+}
+.btn-primary:hover {
+  @apply opacity-90;
+}
+/* secondary button */
+.btn-secondary {
+  @apply p-[2px] rounded-xl bg-gradient-to-r from-[#632EE3] to-[#9F62F2] inline-block;
+}
+.btn-secondary-inner {
+  @apply block rounded-[10px] bg-black px-5 py-3 text-white;
+}
+.btn-secondary:hover {
+  @apply opacity-90;
 }
 
 * {
