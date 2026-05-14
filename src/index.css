@@ -34,7 +34,7 @@
   @apply p-[2px] rounded-xl bg-gradient-to-r from-[#632EE3] to-[#9F62F2] inline-block;
 }
 .btn-secondary-inner {
-  @apply block rounded-[10px] bg-black px-5 py-3 text-white;
+  @apply block rounded-[10px] bg-black px-5 py-3 text-white font-semibold;
 }
 .btn-secondary:hover {
   @apply opacity-90;

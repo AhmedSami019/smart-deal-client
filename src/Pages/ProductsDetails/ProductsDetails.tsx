@@ -1,13 +1,31 @@
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useLoaderData } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 import Swal from "sweetalert2";
 
 const ProductsDetails = () => {
   const { user } = useContext(AuthContext);
-
   const product = useLoaderData();
   const { _id } = product;
+
+  // states
+  const [bids, setBids] = useState<
+    {
+      buyer_name: string;
+      buyer_email: string;
+      bid_price: string;
+    }[]
+  >([]);
+
+  // bids collection for each product
+  useEffect(() => {
+    fetch(`http://localhost:3000/product/bids/${_id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setBids(data);
+      });
+  }, [_id]);
+  console.log(bids);
 
   const bidModalRef = useRef<HTMLDialogElement>(null);
   const handleBidModal = () => {
@@ -27,7 +45,6 @@ const ProductsDetails = () => {
       bid_price: data.bid,
       status: "pending",
     };
-    console.log(newBid);
     fetch("http://localhost:3000/bids", {
       method: "POST",
       headers: {
@@ -56,13 +73,13 @@ const ProductsDetails = () => {
       });
   };
 
-  const handleClose = ()=>{
-    bidModalRef.current?.close()
-  }
+  const handleClose = () => {
+    bidModalRef.current?.close();
+  };
   return (
-    <div>
+    <div className="mx-10 my-5">
       {/* product detail section */}
-      <div>
+      <section>
         <div></div>
         <div>
           <button onClick={handleBidModal} className="btn btn-primary">
@@ -105,7 +122,11 @@ const ProductsDetails = () => {
                   />
                   <div className="flex justify-between items-center mt-5 gap-5">
                     <button className="btn btn-primary w-1/2">Bid now</button>
-                    <button onClick={handleClose} type="button" className="btn-secondary w-1/2">
+                    <button
+                      onClick={handleClose}
+                      type="button"
+                      className="btn-secondary w-1/2"
+                    >
                       <span className="btn-secondary-inner">cancel</span>
                     </button>
                   </div>
@@ -114,8 +135,50 @@ const ProductsDetails = () => {
             </div>
           </dialog>
         </div>
-      </div>
+      </section>
       {/* bids section */}
+      <section className="mt-10">
+        <h2 className="text-3xl font-semibold">
+          Bids for this product{" "}: {" "}
+          <span className="text-primary">{bids.length}</span>
+        </h2>
+        <div className="my-5">
+          <div className="overflow-x-auto">
+            <table className="table">
+              {/* head */}
+              <thead>
+                <tr>
+                  <th>SL No.</th>
+                  <th>Buyer Name</th>
+                  <th>buyer Email</th>
+                  <th>Bid Price</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* row 1 */}
+                {bids.map((bid, index) => (
+                  <tr>
+                    <th>{index + 1}</th>
+                    <td>
+                      <div className="flex items-center gap-3">
+                        <div>
+                          <div className="font-bold">{bid.buyer_name}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>{bid.buyer_email}</td>
+                    <td>{bid.bid_price}</td>
+                    <th>
+                      <button className="btn btn-ghost btn-xs">details</button>
+                    </th>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
