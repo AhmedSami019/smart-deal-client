@@ -13,7 +13,7 @@ const ProductsDetails = () => {
     {
       buyer_name: string;
       buyer_email: string;
-      bid_price: string;
+      bid_price: number;
     }[]
   >([]);
 
@@ -63,6 +63,9 @@ const ProductsDetails = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+          newBid._id = data.insertedId
+          const newBids = [newBid, ...bids].sort((a,b)=> b.bid_price - a.bid_price)
+          setBids(newBids)  
         } else {
           Swal.fire({
             icon: "error",
@@ -150,7 +153,7 @@ const ProductsDetails = () => {
                 <tr>
                   <th>SL No.</th>
                   <th>Buyer Name</th>
-                  <th>buyer Email</th>
+                  <th>Buyer Email</th>
                   <th>Bid Price</th>
                   <th>Actions</th>
                 </tr>
