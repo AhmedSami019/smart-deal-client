@@ -81,7 +81,7 @@ const ProductsDetails = () => {
                     name="bid"
                     placeholder="Place you bid pric"
                   />
-                  <button className="btn btn-neutral mt-4">Login</button>
+                  <button className="btn btn-neutral mt-4">Bid now</button>
                 </fieldset>
               </form>
               <div className="modal-action">
