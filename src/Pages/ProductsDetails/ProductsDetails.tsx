@@ -1,14 +1,42 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import { useLoaderData } from "react-router";
+import { AuthContext } from "../../Context/AuthContext";
 
 const ProductsDetails = () => {
-  const product = useLoaderData();
-  console.log(product);
+  const { user } = useContext(AuthContext);
 
-  const bidModalRef = useRef();
+  const product = useLoaderData();
+  const {_id}= product
+
+  const bidModalRef = useRef<HTMLDialogElement>(null);
   const handleBidModal = () => {
-    bidModalRef.current.showModal();
+    bidModalRef.current?.showModal();
   };
+
+//   bid handler
+  const handleBid = e =>{
+    e.preventDefault()
+    const form = e.target;
+    const formData = new FormData(form)
+    const data = Object.fromEntries(formData.entries());
+    const newBid = {
+      product: _id,
+      buyer_name : data.name,
+      buyer_email : data.email,
+      bid_price : data.bid,
+      status : "pending"
+    };
+    console.log(newBid);
+    fetch('http://localhost:3000/bids', {
+      method: "POST", 
+      headers: {
+        'content-type': "application/json"
+      },
+      body: JSON.stringify(newBid)
+    })
+    .then(res => res.json())
+    .then(data => console.log("after pricing bid",data))
+  }
   return (
     <div>
       {/* product detail section */}
@@ -25,10 +53,37 @@ const ProductsDetails = () => {
             className="modal modal-bottom sm:modal-middle"
           >
             <div className="modal-box">
-              <h3 className="font-bold text-lg">Hello!</h3>
-              <p className="py-4">
-                Press ESC key or click the button below to close
-              </p>
+              <h3 className="font-bold text-lg">
+                Give seller your offered price
+              </h3>
+              <form onSubmit={handleBid} action="">
+                <fieldset className="fieldset">
+                  <label className="label">Buyer Name</label>
+                  <input
+                    type="name"
+                    className="input"
+                    name="name"
+                    defaultValue={user ? user.displayName : ""}
+                    placeholder={!user ? "Enter name" : ""}
+                  />
+                  <label className="label">Buyer Email</label>
+                  <input
+                    type="email"
+                    className="input"
+                    name="email"
+                    defaultValue={user? user.email: ""}
+                    placeholder={!user?"Enter email": ""}
+                  />
+                   <label className="label">Bid price</label>
+                  <input
+                    type="name"
+                    className="input"
+                    name="bid"
+                    placeholder="Place you bid pric"
+                  />
+                  <button className="btn btn-neutral mt-4">Login</button>
+                </fieldset>
+              </form>
               <div className="modal-action">
                 <form method="dialog">
                   {/* if there is a button in form, it will close the modal */}
