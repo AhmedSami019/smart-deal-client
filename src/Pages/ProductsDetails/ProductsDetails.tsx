@@ -145,7 +145,7 @@ const ProductsDetails = () => {
             </div>
             <p>Location : {product.location}</p>
             <p>Contact : {product.seller_contact}</p>
-            <p>Status <span>{product.status}</span></p>
+            <p>Status : <span>{product.status}</span></p>
           </div>
           <button onClick={handleBidModal} className="btn btn-primary w-full">
             I want to buy this product
