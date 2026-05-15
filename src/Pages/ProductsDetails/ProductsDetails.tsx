@@ -224,7 +224,7 @@ const ProductsDetails = () => {
               <tbody>
                 {/* row 1 */}
                 {bids.map((bid, index) => (
-                  <tr>
+                  <tr key={bid._id}>
                     <th>{index + 1}</th>
                     <td>
                       <div className="flex items-center gap-3">
