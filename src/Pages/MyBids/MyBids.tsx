@@ -1,23 +1,110 @@
 import { use, useEffect, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
+import Swal from "sweetalert2";
 
 const MyBids = () => {
-    const [bids, setBids] = useState([])
-    const {user} = use(AuthContext)
+  const [bids, setBids] = useState<
+    {
+      _id: string;
+      buyer_name: string;
+      buyer_email: string;
+      bid_price: number;
+      status: string;
+    }[]
+  >([]);
+  const { user } = use(AuthContext);
 
-    useEffect(()=>{
-        fetch(`http://localhost:3000/bids?email=${user?.email}`)
-        .then(res => res.json())
-        .then(data => {
-            setBids(data);
+  useEffect(() => {
+    fetch(`http://localhost:3000/bids?email=${user?.email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const sordetData = data.sort((a, b) => b.bid_price - a.bid_price);
+        setBids(data);
+      });
+  }, [user?.email]);
+
+  // bid remove handler
+  const handleRemoveBid = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/bids/${id}`, {
+          method: "DELETE",
         })
-    },[user?.email])
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.deletedCount) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+              const remainingBids = bids.filter((bid) => bid._id !== id);
+              setBids(remainingBids);
+            }
+          });
+      }
+    });
+  };
 
-    return (
-        <div className="mt-5">
-            <h2 className="text-center text-4xl font-bold">My Bids : {bids.length}</h2>
-        </div>
-    );
+  return (
+    <div className="mt-5">
+      <h2 className="text-center text-4xl font-bold">
+        My Bids : {bids.length}
+      </h2>
+      <div>
+        <table className="table">
+          {/* head */}
+          <thead>
+            <tr>
+              <th>SL No.</th>
+              <th>Product</th>
+              <th>Seller Name</th>
+              <th>Bid Price</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* row 1 */}
+            {bids.map((bid, index) => (
+              <tr key={bid._id}>
+                <th>{index + 1}</th>
+                <td>
+                  <div className="flex items-center gap-3">
+                    <div>
+                      <div className="font-bold">{bid.buyer_name}</div>
+                    </div>
+                  </div>
+                </td>
+                <td>{bid.buyer_email}</td>
+                <td>{bid.bid_price}</td>
+                <td className="badge badge-warning text-base-300">
+                  {bid.status}
+                </td>
+                <th>
+                  <button
+                    onClick={() => handleRemoveBid(bid._id)}
+                    className="btn btn-ghost btn-xs"
+                  >
+                    Remove
+                  </button>
+                </th>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 };
 
 export default MyBids;
