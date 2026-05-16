@@ -1,14 +1,21 @@
 import { useContext } from "react";
 import { AuthContext } from "../../Context/AuthContext";
-import { NavLink } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router";
 
 const Register = () => {
+
+  // private route related data 
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state || "/";
+
   const { signInWithGoogle } = useContext(AuthContext);
 
   const handleSignInWithGoogle = () => {
     signInWithGoogle()
       .then((result) => {
         console.log(result.user);
+        navigate(from)
 
         const newUser = {
           name: result.user.displayName,
@@ -42,7 +49,7 @@ const Register = () => {
   }
 
   return (
-    <div className="card bg-base-100 w-full mx-auto max-w-sm shrink-0 shadow-2xl">
+    <div className="card bg-base-100 mt-10 w-full mx-auto max-w-sm shrink-0 shadow-2xl">
       <div className="card-body">
         <h2 className="text-2xl text-center font-bold">Register</h2>
         <p className="text-center">
@@ -53,19 +60,19 @@ const Register = () => {
         </p>
         <form onSubmit={handleRegister} className="fieldset">
           <label className="label">Name</label>
-          <input type="text" className="input" name="userName" placeholder="Your name" />
+          <input type="text" className="input w-full" name="userName" placeholder="Your name" />
           <label className="label">Email</label>
-          <input type="email" className="input" name="email" placeholder="Email" />
+          <input type="email" className="input w-full" name="email" placeholder="Email" />
           <label className="label">Photo url</label>
-          <input type="url" className="input" name="photo" placeholder="Photo url" />
+          <input type="url" className="input w-full" name="photo" placeholder="Photo url" />
           <label className="label">Password</label>
-          <input type="password" className="input" name="password" placeholder="Password" />
+          <input type="password" className="input w-full" name="password" placeholder="Password" />
            <label className="label">Confirm Password</label>
-          <input type="password" className="input" name="newPassword" placeholder="Confirm Password" />
+          <input type="password" className="input w-full" name="newPassword" placeholder="Confirm Password" />
           <div>
             <a className="link link-hover">Forgot password?</a>
           </div>
-          <button className="btn btn-neutral mt-4">Login</button>
+          <button className="btn btn-primary mt-4">Login</button>
         </form>
         {/* divider */}
         <div className="divider">OR</div>
@@ -73,7 +80,7 @@ const Register = () => {
         {/* Google */}
         <button
           onClick={handleSignInWithGoogle}
-          className="btn bg-white text-black border-[#e5e5e5]"
+          className="btn rounded-xl bg-white text-black border-[#e5e5e5]"
         >
           <svg
             aria-label="Google logo"

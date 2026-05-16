@@ -1,25 +1,36 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../../Context/AuthContext';
-import { NavLink } from 'react-router';
+import React, { useContext } from "react";
+import { AuthContext } from "../../Context/AuthContext";
+import { NavLink, useLocation, useNavigate } from "react-router";
 
 const Login = () => {
+  // private route related element
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state || "/";
+  const { signInWithGoogle } = useContext(AuthContext);
 
-        const {signInWithGoogle} = useContext(AuthContext)
-    
-        const handleSignInWithGoogle = ()=>{
-            signInWithGoogle()
-            .then((result)=>{
-              console.log(result.user);
-            }).catch((error) => {
-              console.log(error.message);
-            })
-        }
+  const handleSignInWithGoogle = () => {
+    signInWithGoogle()
+      .then((result) => {
+        console.log(result.user);
+        navigate(from);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
 
-    return (
-        <div className="card bg-base-100 w-full mx-auto max-w-sm shrink-0 shadow-2xl">
+  return (
+    <div className="card bg-base-100 mt-10 w-full mx-auto max-w-sm shrink-0 shadow-2xl">
       <div className="card-body">
-        <h2 className='text-2xl text-center font-bold'>Login</h2>
-        <p className='text-center'>Don't have any account?<NavLink to={"/register"} className={"text-blue-600"}> Register</NavLink></p>
+        <h2 className="text-2xl text-center font-bold">Login</h2>
+        <p className="text-center">
+          Don't have any account?
+          <NavLink to={"/register"} className={"text-blue-600"}>
+            {" "}
+            Register
+          </NavLink>
+        </p>
         <fieldset className="fieldset">
           <label className="label">Email</label>
           <input type="email" className="input" placeholder="Email" />
@@ -28,10 +39,13 @@ const Login = () => {
           <div>
             <a className="link link-hover">Forgot password?</a>
           </div>
-          <button className="btn btn-neutral mt-4">Login</button>
+          <button className="btn btn-primary mt-4">Login</button>
         </fieldset>
         {/* Google */}
-        <button onClick={handleSignInWithGoogle} className="btn bg-white text-black border-[#e5e5e5]">
+        <button
+          onClick={handleSignInWithGoogle}
+          className="btn rounded-xl bg-white text-black border-[#e5e5e5]"
+        >
           <svg
             aria-label="Google logo"
             width="16"
@@ -63,7 +77,7 @@ const Login = () => {
         </button>
       </div>
     </div>
-    );
+  );
 };
 
 export default Login;
