@@ -19,12 +19,24 @@ const ProductsDetails = () => {
 
   // bids collection for each product
   useEffect(() => {
-    fetch(`http://localhost:3000/product/bids/${_id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setBids(data);
-      });
-  }, [_id]);
+
+    if(!_id || !user) return;
+
+    const fetchBids = async ()=>{
+      const token = user.accessToken
+
+      const res = await fetch(`http://localhost:3000/product/bids/${_id}`, {
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      })
+      const data = await res.json()
+      setBids(data)
+    }
+
+    fetchBids()
+
+  }, [_id, user]);
   console.log(bids);
 
   const bidModalRef = useRef<HTMLDialogElement>(null);

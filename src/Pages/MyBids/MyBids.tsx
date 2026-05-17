@@ -14,14 +14,21 @@ const MyBids = () => {
   >([]);
   const { user } = use(AuthContext);
 
+  // authorization token 
+  const token = user.accessToken
+
   useEffect(() => {
-    fetch(`http://localhost:3000/bids?email=${user?.email}`)
+    fetch(`http://localhost:3000/bids?email=${user?.email}`,{
+      headers: {
+        authorization : `Bearer ${token}`
+      }
+    })
       .then((res) => res.json())
       .then((data) => {
-        const sordetData = data.sort((a, b) => b.bid_price - a.bid_price);
-        setBids(data);
+        const sortedData = data.sort((a, b) => b.bid_price - a.bid_price);
+        setBids(sortedData);
       });
-  }, [user?.email]);
+  }, [user]);
 
   // bid remove handler
   const handleRemoveBid = (id) => {
