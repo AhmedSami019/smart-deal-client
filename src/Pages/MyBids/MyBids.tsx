@@ -14,8 +14,9 @@ const MyBids = () => {
   >([]);
   const { user } = use(AuthContext);
 
-  // authorization token 
-  const token = user.accessToken
+  // authorization token from jwt
+  const token = localStorage.getItem('token')
+  
 
   useEffect(() => {
     fetch(`http://localhost:3000/bids?email=${user?.email}`,{
@@ -29,6 +30,22 @@ const MyBids = () => {
         setBids(sortedData);
       });
   }, [user]);
+
+  // all process for firebase access token
+  // const token = user.accessToken
+
+  // useEffect(() => {
+  //   fetch(`http://localhost:3000/bids?email=${user?.email}`,{
+  //     headers: {
+  //       authorization : `Bearer ${token}`
+  //     }
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       const sortedData = data.sort((a, b) => b.bid_price - a.bid_price);
+  //       setBids(sortedData);
+  //     });
+  // }, [user]);
 
   // bid remove handler
   const handleRemoveBid = (id) => {
