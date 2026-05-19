@@ -1,17 +1,18 @@
 import { use, useEffect, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import Swal from "sweetalert2";
+import axios from "axios";
+
+type Bid = {
+  _id: string;
+  buyer_name: string;
+  buyer_email: string;
+  bid_price: number;
+  status: string;
+};
 
 const MyBids = () => {
-  const [bids, setBids] = useState<
-    {
-      _id: string;
-      buyer_name: string;
-      buyer_email: string;
-      bid_price: number;
-      status: string;
-    }[]
-  >([]);
+  const [bids, setBids] = useState<Bid[]>([]);
   const { user } = use(AuthContext);
 
   // authorization token from jwt
@@ -19,17 +20,26 @@ const MyBids = () => {
   
 
   useEffect(() => {
-    fetch(`http://localhost:3000/bids?email=${user?.email}`,{
-      headers: {
-        authorization : `Bearer ${token}`
-      }
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        const sortedData = data.sort((a, b) => b.bid_price - a.bid_price);
-        setBids(sortedData);
-      });
+   axios.get(`http://localhost:3000/bids?email=${user?.email}`,{
+    headers: {Authorization: `Bearer ${token}`}
+   })
+   .then(data => {
+    setBids(data.data)
+   })
   }, [user]);
+  // useEffect(() => {
+  //   fetch(`http://localhost:3000/bids?email=${user?.email}`,{
+  //     headers: {
+  //       authorization : `Bearer ${token}`
+  //     }
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data: Bid[]) => {
+  //       const sortedData = data.sort((a, b) => b.bid_price - a.bid_price);
+  //       console.log(sortedData);
+  //       setBids(sortedData);
+  //     });
+  // }, [user]);
 
   // all process for firebase access token
   // const token = user.accessToken
